@@ -1,5 +1,5 @@
 <?php
-
+/* comportament dels ànecs */
 class Duck {
 
     public function quack() {
@@ -11,7 +11,7 @@ class Duck {
     }
 
 }
-
+/* comportament dels galls d'inidi, incompatible amb els dels ànecs */
 class Turkey {
 
     public function gobble() {
@@ -23,13 +23,12 @@ class Turkey {
     }
 }
 
-/* classe creada com a Adapter */
-/* adaptem el so i el comportament de vol dels ànecs als galls dindis */
-class TurkeyAdapter extends Turkey {
+/* Volem que els galls d'indi es comportin com ànecs */
+class TurkeyAdapter extends Duck {
 
     public function quack() {
         /* tradueix el 'quack' a 'gobble gobble' */ 
-        $this->gobble();
+        echo "Gobble gobble \n";
     }
 
     public function fly() {
