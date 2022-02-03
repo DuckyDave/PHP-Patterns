@@ -3,32 +3,43 @@
 /* classe refactoritzada com a Singleton */
 class Tigger {
 
+    /* una sola instància de la classe Tiger */
     private static $instance = null;
+    /* nombre de vegades que tigger fa un rugit" */
+    public $times = 1; /* nombre sencer major que zero. Valor per defecte: 1 */
 
     /* no es pot fer servir 'new' per crear un objecte */
     protected function __construct() {}
 
     /* no es pot clonar l'objecte creat */
-    private function __clone() {}
+    protected function __clone() {}
+
+    /* no es pot deserialitzar l'objecte creat */
+    public function __wakeup() {}
 
     /* crea un objecte de la classe Tigger una sola vegada i el retorna cada vegada que es crida */
-    public static function getInstance(): self {
-        if(self::$instance == null) {
+    public static function getInstance() {
+        if(!isset(self::$instance)) {
             echo "Building character..." . PHP_EOL;
-            self::$instance = new self();
+            self::$instance = new static();
         }
         
         return self::$instance;
     }
-
-    /* no es pot deserialitzar l'objecte creat */
-    private function __wakeup() {}
 
     /* rugit del tigre */
     public function roar() {
         echo "Grrr!" . PHP_EOL;
     }
 
+    /* imprimeix per pantalla múltiples vegades el rugit de Tigger */
+    public function printSeveralRoars($times) {
+        for($i = 1; $i <= $times; $i++){
+            $this->roar();
+            /* echo "Grrr!" . PHP_EOL; */
+        }
+    }
+    
     /* compta el nombre de vegades que Tigger ha rugit */
     public function getCounter(int $times) {
         echo "Tigger ha rugit " . $times . " cop(s)". PHP_EOL;
@@ -36,11 +47,15 @@ class Tigger {
 
 }
 
-$times = rand(1, 10);
-$tigger = Tigger::getInstance();
-for($i=1; $i <= $times; $i++) {
-    $tigger->roar();
+/* test */
+if($argc == 2 && isset($argv[1]) && $argv[1] > 1) {
+    $tigger1 = Tigger::getInstance();
+    $times = rand(1, $argv[1]);
+    $tigger1->printSeveralRoars($times);
+    $tigger1->getCounter($times);
+} else {
+    echo "Per executar el programa, has d'indicar el nombre màxim de rugits que podria fer Tigger\n";
+    echo "Per exemple: 'php tigger.php 10'\n";
 }
-$tigger->getCounter($times);
 
 ?>
