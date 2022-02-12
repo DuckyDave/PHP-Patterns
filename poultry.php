@@ -26,6 +26,13 @@ class Turkey {
 /* Volem que els galls d'indi es comportin com ànecs */
 class TurkeyAdapter extends Duck {
 
+    private $turkey;
+
+    public function __construct(Turkey $turkey) {
+        /* crea un gall dindi que es comporta com un ànec */
+        $this->turkey = $turkey;
+    }
+
     public function quack() {
         /* tradueix el 'quack' a 'gobble gobble' */ 
         echo "Gobble gobble \n";
