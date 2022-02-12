@@ -34,9 +34,11 @@ class Tigger {
 
     /* imprimeix per pantalla múltiples vegades el rugit de Tigger */
     public function printSeveralRoars($times) {
-        for($i = 1; $i <= $times; $i++){
-            $this->roar();
-            /* echo "Grrr!" . PHP_EOL; */
+        if ($times > 0) {
+            for($i = 1; $i <= $times; $i++){
+                $this->roar();
+                /* echo "Grrr!" . PHP_EOL; */
+            }
         }
     }
     
@@ -48,9 +50,9 @@ class Tigger {
 }
 
 /* test */
-if($argc == 2 && isset($argv[1]) && $argv[1] > 1) {
+if($argc == 2 && isset($argv[1]) && $argv[1] > 0) {
     $tigger1 = Tigger::getInstance();
-    $times = rand(1, $argv[1]);
+    $times = rand(0, $argv[1]);
     $tigger1->printSeveralRoars($times);
     $tigger1->getCounter($times);
 } else {
